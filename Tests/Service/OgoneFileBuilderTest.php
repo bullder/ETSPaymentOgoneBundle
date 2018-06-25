@@ -3,7 +3,6 @@
 namespace ETS\Payment\OgoneBundle\Tests\Response;
 
 use PHPUnit\Framework\TestCase;
-
 /*
  * Copyright 2013 ETSGlobal <ecs@etsglobal.org>
  *
@@ -27,33 +26,33 @@ class OgoneFileBuilderTest extends TestCase
 {
     public function testIsValidWithPayIdText()
     {
-        $expectedTextContent = "OHL;ETSCPC;anglet64600;;userapi64600;
+        $expectedTextContent = 'OHL;ETSCPC;anglet64600;;userapi64600;
 OHF;FILEorder_id25;MTR;SAS;1;
 INV;EUR;;;;transactionId;LEGAL;;payId;SAS;;;;ETSCPC;;2;aliasGSP;azerty;;;1700065264;;;;;;;;order_id25;;;3000;616;3616;
 CLI;LEGAL;;;;;;;;;;;;;;;;;;;
 DET;1;id25;article25;1000;0;19.6%;;;;;;;1000;
 DET;2;id26;article25;1000;0;21%;;;;;;;2000;
 OTF;
-";
+';
 
         $token = new Token('ETSCPC', 'userapi64600', 'anglet64600', '', '');
         $builder = new OgoneFileBuilder($token);
-        $articles = array(
-            0 => array(
+        $articles = [
+            0 => [
                 'id' => 'id25',
                 'quantity' => 1,
                 'price' => 10,
                 'name' => 'article25',
                 'vat' => 0.196, //VAT: 196
-            ),
-            1 => array(
+            ],
+            1 => [
                 'id' => 'id26',
                 'quantity' => 2,
                 'price' => 10,
                 'name' => 'article25',
                 'vat' => 0.21, //VAT: 420
-            ),
-        );
+            ],
+        ];
         $text = $builder->buildInv('order_id25', 'azerty', '1700065264', 'LEGAL', 'aliasGSP', 'SAS', $articles, 'payId', 'transactionId');
 
         $this->assertEquals($expectedTextContent, $text);
@@ -61,33 +60,33 @@ OTF;
 
     public function testIsValidWithNoPayIdText()
     {
-        $expectedTextContent = "OHL;ETSCPC;anglet64600;;userapi64600;
+        $expectedTextContent = 'OHL;ETSCPC;anglet64600;;userapi64600;
 OHF;FILEorder_id25;ATR;RES;1;
 INV;EUR;;;;transactionId;LEGAL;;;RES;;;;ETSCPC;;2;aliasGSP;azerty;;;1700065264;;;;;;;;order_id25;;;3000;616;3616;
 CLI;LEGAL;;;;;;;;;;;;;;;;;;;
 DET;1;id25;article25;1000;0;19.6%;;;;;;;1000;
 DET;2;id26;article25;1000;0;21%;;;;;;;2000;
 OTF;
-";
+';
 
         $token = new Token('ETSCPC', 'userapi64600', 'anglet64600', '', '');
         $builder = new OgoneFileBuilder($token);
-        $articles = array(
-            0 => array(
+        $articles = [
+            0 => [
                 'id' => 'id25',
                 'quantity' => 1,
                 'price' => 10,
                 'name' => 'article25',
                 'vat' => 0.196, //VAT: 196
-            ),
-            1 => array(
+            ],
+            1 => [
                 'id' => 'id26',
                 'quantity' => 2,
                 'price' => 10,
                 'name' => 'article25',
                 'vat' => 0.21, //VAT: 420
-            ),
-        );
+            ],
+        ];
         $text = $builder->buildInv('order_id25', 'azerty', '1700065264', 'LEGAL', 'aliasGSP', 'RES', $articles, '', 'transactionId');
 
         $this->assertEquals($expectedTextContent, $text);
@@ -95,35 +94,35 @@ OTF;
 
     public function provideInvalidArticles()
     {
-        return array(
-            array(
-                array(
-                    array(),
-                ),
-                array(
-                    array('id' => 2),
-                ),
-                array(
-                    array('id' => 2, 'quantity' => 1),
-                ),
-            ),
-        );
+        return [
+            [
+                [
+                    [],
+                ],
+                [
+                    ['id' => 2],
+                ],
+                [
+                    ['id' => 2, 'quantity' => 1],
+                ],
+            ],
+        ];
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOperationCodeText()
     {
         $token = new Token('ETSCPC', 'userapi64600', 'anglet64600', '', '');
         $builder = new OgoneFileBuilder($token);
-        $articles = array();
+        $articles = [];
         $builder->buildInv('order_id25', 'azerty', '1700065264', 'LEGAL', 'aliasGSP', 'EE', $articles, 'payId');
     }
 
     /**
      * @dataProvider provideInvalidArticles
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testMissingKey(array $articles)
     {
@@ -135,25 +134,25 @@ OTF;
 
     public function testValidRound()
     {
-        $expectedTextContent = "OHL;ETSCPC;anglet64600;;userapi64600;
+        $expectedTextContent = 'OHL;ETSCPC;anglet64600;;userapi64600;
 OHF;FILEorder_id25;MTR;SAS;1;
 INV;EUR;;;;transactionId;LEGAL;;payId;SAS;;;;ETSCPC;;1;aliasGSP;azerty;;;1700065264;;;;;;;;order_id25;;;4403;881;5284;
 CLI;LEGAL;;;;;;;;;;;;;;;;;;;
 DET;1;id25;article25;4403;0;20%;;;;;;;4403;
 OTF;
-";
+';
 
-        $token   = new Token('ETSCPC', 'userapi64600', 'anglet64600', '', '');
+        $token = new Token('ETSCPC', 'userapi64600', 'anglet64600', '', '');
         $builder = new OgoneFileBuilder($token);
-        $article = array(
-            0 => array(
-                'id'       => 'id25',
+        $article = [
+            0 => [
+                'id' => 'id25',
                 'quantity' => 1,
-                'price'    => 44.03,
-                'name'     => 'article25',
-                'vat'      => 0.2,
-            )
-        );
+                'price' => 44.03,
+                'name' => 'article25',
+                'vat' => 0.2,
+            ],
+        ];
 
         $result = $builder->buildInv('order_id25', 'azerty', '1700065264', 'LEGAL', 'aliasGSP', 'SAS', $article, 'payId', 'transactionId');
 

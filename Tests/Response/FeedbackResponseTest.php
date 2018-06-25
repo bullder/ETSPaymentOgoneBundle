@@ -15,16 +15,16 @@ class FeedbackResponseTest extends TestCase
 
     public function setUp()
     {
-        $this->requestStubber = new RequestStubber(array(
-            array('orderID', null, false, 42),
-            array('amount', null, false, '42'),
-            array('currency', null, false, 'EUR'),
-            array('PM', null, false, 'credit card'),
-            array('STATUS', null, false, 5),
-            array('CARDNO', null, false, 4567123478941234),
-            array('PAYID', null, false, 43),
-            array('SHASign', null, false, 'fzgzgzghz4648zh6z5h')
-        ));
+        $this->requestStubber = new RequestStubber([
+            ['orderID', null, false, 42],
+            ['amount', null, false, '42'],
+            ['currency', null, false, 'EUR'],
+            ['PM', null, false, 'credit card'],
+            ['STATUS', null, false, 5],
+            ['CARDNO', null, false, 4567123478941234],
+            ['PAYID', null, false, 43],
+            ['SHASign', null, false, 'fzgzgzghz4648zh6z5h'],
+        ]);
     }
 
     /**
@@ -39,7 +39,7 @@ class FeedbackResponseTest extends TestCase
         $addValueMethod = $class->getMethod('addValue');
         $addValueMethod->setAccessible(true);
 
-        $addValueMethod->invokeArgs($feedbackResponse, array('ORDERid', 48));
+        $addValueMethod->invokeArgs($feedbackResponse, ['ORDERid', 48]);
     }
 
     /**
@@ -54,7 +54,7 @@ class FeedbackResponseTest extends TestCase
         $getValueMethod = $class->getMethod('getValue');
         $getValueMethod->setAccessible(true);
 
-        $getValueMethod->invokeArgs($feedbackResponse, array('dummyField'));
+        $getValueMethod->invokeArgs($feedbackResponse, ['dummyField']);
     }
 
     public function testConstructor()

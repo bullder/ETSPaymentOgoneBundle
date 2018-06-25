@@ -19,14 +19,14 @@ namespace ETS\Payment\OgoneBundle\Response;
  */
 
 /**
- * AbstractResponse class
+ * AbstractResponse class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 abstract class AbstractResponse implements ResponseInterface
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function isApproving(): bool
     {
@@ -36,7 +36,7 @@ abstract class AbstractResponse implements ResponseInterface
     /**
      * Returns true if the payment is approved or already in a depositing state.
      *
-     * @return boolean
+     * @return bool
      */
     public function isApproved(): bool
     {
@@ -50,7 +50,7 @@ abstract class AbstractResponse implements ResponseInterface
     /**
      * Returns true if the payment is in a depositing state or approved.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDepositing(): bool
     {
@@ -61,7 +61,7 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeposited()
     {
@@ -70,33 +70,33 @@ abstract class AbstractResponse implements ResponseInterface
 
     public function isRefunding()
     {
-        return $this->getStatus() === ResponseInterface::REFUND_PENDING;
+        return ResponseInterface::REFUND_PENDING === $this->getStatus();
     }
 
     public function isRefunded()
     {
-        return $this->getStatus() === ResponseInterface::REFUND;
+        return ResponseInterface::REFUND === $this->getStatus();
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAuthorized()
     {
-        return $this->getStatus() === ResponseInterface::AUTHORIZED;
+        return ResponseInterface::AUTHORIZED === $this->getStatus();
     }
 
     public function isIncomplete()
     {
-        return $this->getStatus() === ResponseInterface::INVALID;
+        return ResponseInterface::INVALID === $this->getStatus();
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSuccessful()
     {
-        return !in_array($this->getStatus(), array(static::INVALID, '', null), true);
+        return !in_array($this->getStatus(), [static::INVALID, '', null], true);
     }
 
     /**

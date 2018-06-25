@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 
 /**
- * Sha-1 In test
+ * Sha-1 In test.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -32,40 +32,40 @@ class Sha1OutTest extends TestCase
 {
     public function testGetStringToHashFollowsOgoneRules()
     {
-        $params = array(
-            'PayId'    => 123456,
+        $params = [
+            'PayId' => 123456,
             'CURRENCY' => 'EUR',
-            'NCERROR'  => 0,
-            'BRAND'    => '',
-        );
+            'NCERROR' => 0,
+            'BRAND' => '',
+        ];
 
         $sha1outGen = new Sha1Out($this->createTokenMock());
 
-        $class                 = new \ReflectionClass($sha1outGen);
+        $class = new \ReflectionClass($sha1outGen);
         $getStringToHashMethod = $class->getMethod('getStringToHash');
         $getStringToHashMethod->setAccessible(true);
 
-        $stringToHash = $getStringToHashMethod->invokeArgs($sha1outGen, array($params));
+        $stringToHash = $getStringToHashMethod->invokeArgs($sha1outGen, [$params]);
 
         $this->assertTrue(false !== strpos($stringToHash, 'NCERROR'), 'Fields must be included for hash calculation even if their value is 0.');
         $this->assertTrue(false === strpos($stringToHash, 'BRAND'), 'Parameters that do not have a value should NOT be included in the string to hash.');
         $this->assertTrue(false !== strpos($stringToHash, 'PAYID'), 'Each parameter must be put in upper case.');
 
-        $firstParamPos  = strpos($stringToHash, 'CURRENCY');
+        $firstParamPos = strpos($stringToHash, 'CURRENCY');
         $secondParamPos = strpos($stringToHash, 'NCERROR');
-        $thirdParamPos  = strpos($stringToHash, 'PAYID');
+        $thirdParamPos = strpos($stringToHash, 'PAYID');
         $this->assertGreaterThan($firstParamPos, $secondParamPos, 'All parameters must be sorted following the order in Sha1Out::$acceptableFields.');
         $this->assertGreaterThan($secondParamPos, $thirdParamPos, 'All parameters must be sorted following the order in Sha1Out::$acceptableFields.');
     }
 
     public function testGenerate()
     {
-        $params = array(
-            'PayId'    => 123456,
+        $params = [
+            'PayId' => 123456,
             'CURRENCY' => 'EUR',
-            'NCERROR'  => 0,
-            'BRAND'    => ''
-        );
+            'NCERROR' => 0,
+            'BRAND' => '',
+        ];
 
         $sha1outGen = new Sha1Out($this->createTokenMock());
 

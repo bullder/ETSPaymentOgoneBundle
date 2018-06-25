@@ -19,7 +19,7 @@ namespace ETS\Payment\OgoneBundle\Response;
  */
 
 /**
- * Response class
+ * Response class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -55,7 +55,7 @@ class DirectResponse extends AbstractResponse
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStatus(): int
     {
@@ -83,6 +83,6 @@ class DirectResponse extends AbstractResponse
      */
     public function hasError(): bool
     {
-        return isset($this->xml->attributes()['PARAMS_ERROR']) || (strlen($this->getErrorCode()) > 0 && $this->getErrorCode() !== '0');
+        return isset($this->xml->attributes()['PARAMS_ERROR']) || (strlen($this->getErrorCode()) > 0 && '0' !== $this->getErrorCode());
     }
 }

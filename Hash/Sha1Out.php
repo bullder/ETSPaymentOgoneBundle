@@ -21,13 +21,13 @@ use ETS\Payment\OgoneBundle\Client\TokenInterface;
  */
 
 /**
- * Sha-1 Out generator
+ * Sha-1 Out generator.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class Sha1Out implements GeneratorInterface
 {
-    protected static $acceptableFields = array(
+    protected static $acceptableFields = [
         'AAVADDRESS',
         'AAVCHECK',
         'AAVMAIL',
@@ -89,7 +89,7 @@ class Sha1Out implements GeneratorInterface
         'SUBSCRIPTION_ID',
         'TRXDATE',
         'VC',
-    );
+    ];
 
     /**
      * @var TokenInterface
@@ -107,7 +107,7 @@ class Sha1Out implements GeneratorInterface
     /**
      * @param string $field
      *
-     * @return boolean
+     * @return bool
      */
     public static function isAcceptableField($field)
     {
@@ -134,10 +134,10 @@ class Sha1Out implements GeneratorInterface
     protected function getStringToHash(array $parameters)
     {
         $stringToHash = '';
-        $parameters   = array_change_key_case($parameters, CASE_UPPER);
+        $parameters = array_change_key_case($parameters, CASE_UPPER);
 
         foreach (self::$acceptableFields as $acceptableField) {
-            if (isset($parameters[strtoupper($acceptableField)]) && (string) $parameters[strtoupper($acceptableField)] !== '') {
+            if (isset($parameters[strtoupper($acceptableField)]) && '' !== (string) $parameters[strtoupper($acceptableField)]) {
                 $stringToHash .= sprintf('%s=%s%s', strtoupper($acceptableField), $parameters[strtoupper($acceptableField)], $this->token->getShaout());
             }
         }

@@ -5,7 +5,7 @@ namespace ETS\Payment\OgoneBundle\Response;
 class BatchResponse extends DirectResponse
 {
     /**
-     * @return integer
+     * @return int
      */
     public function getStatusError(): int
     {

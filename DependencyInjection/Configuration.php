@@ -22,21 +22,21 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 
 /**
- * Bundle Configuration
+ * Bundle Configuration.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
 
         return $treeBuilder
-            ->root('ets_payment_ogone','array')
+            ->root('ets_payment_ogone', 'array')
                 ->children()
                     ->scalarNode('pspid')->isRequired()->cannotBeEmpty()->end()
                     ->scalarNode('shain')->isRequired()->cannotBeEmpty()->end()

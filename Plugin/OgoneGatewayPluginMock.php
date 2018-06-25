@@ -22,7 +22,7 @@ use Symfony\Component\BrowserKit\Response;
  */
 
 /**
- * Ogone gateway plugin mock class for tests
+ * Ogone gateway plugin mock class for tests.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -47,7 +47,7 @@ class OgoneGatewayPluginMock extends OgoneGatewayPlugin
     }
 
     /**
-     * Performs a request to an external payment service
+     * Performs a request to an external payment service.
      *
      * @param Request $request
      *

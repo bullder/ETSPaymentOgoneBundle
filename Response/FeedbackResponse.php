@@ -3,7 +3,6 @@
 namespace ETS\Payment\OgoneBundle\Response;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use ETS\Payment\OgoneBundle\Hash\Sha1Out;
 
 /*
@@ -23,25 +22,25 @@ use ETS\Payment\OgoneBundle\Hash\Sha1Out;
  */
 
 /**
- * FeedbackResponse class
+ * FeedbackResponse class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class FeedbackResponse extends AbstractResponse
 {
-    private $values = array();
+    private $values = [];
     private $hash;
 
     /**
-     * FeedbackResponse constructor
+     * FeedbackResponse constructor.
      *
-     * @param  Request $request
+     * @param Request $request
      */
     public function __construct(Request $request)
     {
         foreach (array_merge($request->query->all(), $request->request->all()) as $receivedField => $value) {
             if (Sha1Out::isAcceptableField($receivedField)) {
-                if ((string) $value !== '') {
+                if ('' !== (string) $value) {
                     $this->addValue($receivedField, $value);
                 }
             } elseif ('SHASIGN' === strtoupper($receivedField) && null !== $value) {
@@ -96,7 +95,7 @@ class FeedbackResponse extends AbstractResponse
 
     /**
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @throws \BadMethodCallException If we try to set the value of a field twice
      */
@@ -111,9 +110,9 @@ class FeedbackResponse extends AbstractResponse
     }
 
     /**
-     * @param  string $field
+     * @param string $field
      *
-     * @return string|integer
+     * @return string|int
      *
      * @throws \OutOfRangeException If the given field has not been set when this object has been instanciated
      */

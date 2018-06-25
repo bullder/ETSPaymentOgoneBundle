@@ -25,60 +25,60 @@ use PHPUnit\Framework\TestCase;
  */
 
 /**
- * Sha-1 In test
+ * Sha-1 In test.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class Sha1InTest extends TestCase
 {
     /**
-     * Test that the generate function uppercase the keys
+     * Test that the generate function uppercase the keys.
      */
     public function testGenerateUseUppercase()
     {
         $hashGenerator = new Sha1In($this->createTokenMock());
 
-        $refSha1  = $hashGenerator->generate(array('CN' => 'Foo Bar'));
-        $testSha1 = $hashGenerator->generate(array('cn' => 'Foo Bar'));
+        $refSha1 = $hashGenerator->generate(['CN' => 'Foo Bar']);
+        $testSha1 = $hashGenerator->generate(['cn' => 'Foo Bar']);
 
         $this->assertEquals($refSha1, $testSha1);
     }
 
     /**
-     * Test that the generate function sort key alphabetically
+     * Test that the generate function sort key alphabetically.
      */
     public function testGenerateSortKeys()
     {
         $hashGenerator = new Sha1In($this->createTokenMock());
 
-        $refSha1  = $hashGenerator->generate(array('PSPID' => 42, 'CN' => 'Foo Bar'));
-        $testSha1 = $hashGenerator->generate(array('CN' => 'Foo Bar', 'PSPID' => 42));
+        $refSha1 = $hashGenerator->generate(['PSPID' => 42, 'CN' => 'Foo Bar']);
+        $testSha1 = $hashGenerator->generate(['CN' => 'Foo Bar', 'PSPID' => 42]);
 
         $this->assertEquals($refSha1, $testSha1);
     }
 
     /**
-     * Test that the generate function only use allowed parameters
+     * Test that the generate function only use allowed parameters.
      */
     public function testGenerateShouldSkipNotAllowedParameters()
     {
         $hashGenerator = new Sha1In($this->createTokenMock());
 
-        $refSha1  = $hashGenerator->generate(array());
-        $testSha1 = $hashGenerator->generate(array('foo' => 'bar'));
+        $refSha1 = $hashGenerator->generate([]);
+        $testSha1 = $hashGenerator->generate(['foo' => 'bar']);
 
         $this->assertEquals($refSha1, $testSha1);
     }
 
     /**
-     * Test that the generate function take care of wildcarded parameters
+     * Test that the generate function take care of wildcarded parameters.
      */
     public function testGenerateShouldAllowWildcardedParameters()
     {
         $hashGenerator = new Sha1In($this->createTokenMock());
 
-        $refSha1  = $hashGenerator->generate(array());
-        $testSha1 = $hashGenerator->generate(array('ITEMNAME01' => 'foobar'));
+        $refSha1 = $hashGenerator->generate([]);
+        $testSha1 = $hashGenerator->generate(['ITEMNAME01' => 'foobar']);
 
         $this->assertNotEquals($refSha1, $testSha1);
     }

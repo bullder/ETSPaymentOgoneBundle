@@ -25,22 +25,22 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 
 /**
- * Bundle Extension class
+ * Bundle Extension class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class ETSPaymentOgoneExtension extends Extension
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $processor     = new Processor();
-        $config        = $processor->processConfiguration($configuration, $configs);
+        $processor = new Processor();
+        $config = $processor->processConfiguration($configuration, $configs);
 
-        $xmlLoader     = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $xmlLoader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $xmlLoader->load('services.xml');
 
         $container->setParameter('payment.ogone.pspid', $config['pspid']);

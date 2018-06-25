@@ -22,14 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 
 /**
- * Token class test
+ * Token class test.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class TokenTest extends TestCase
 {
     /**
-     * Test the object construction
+     * Test the object construction.
      */
     public function testConstruct()
     {
@@ -37,7 +37,7 @@ class TokenTest extends TestCase
         $apiPassword = 'fooapipass';
         $apiUser = 'fooapiuser';
         $shain = 'fooshain';
-        $shaout= 'fooshaout';
+        $shaout = 'fooshaout';
 
         $token = new Token($pspid, $apiUser, $apiPassword, $shain, $shaout);
 

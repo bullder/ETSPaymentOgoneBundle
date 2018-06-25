@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Tests\Logger;
 
 /**
- * Copyright 2013 ETSGlobal <ecs@etsglobal.org>
+ * Copyright 2013 ETSGlobal <ecs@etsglobal.org>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ use Symfony\Component\HttpKernel\Tests\Logger;
  */
 
 /**
- * OgoneBatchGatewayPluginTest tests
+ * OgoneBatchGatewayPluginTest tests.
  */
 class OgoneBatchGatewayPluginTest extends TestCase
 {
@@ -52,7 +52,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
             ['STATUS', null, false, 5],
             ['CARDNO', null, false, 4567123478941234],
             ['PAYID', null, false, 43],
-            ['SHASign', null, false, 'fzgzgzghz4648zh6z5h']
+            ['SHASign', null, false, 'fzgzgzghz4648zh6z5h'],
         ]);
     }
 
@@ -72,9 +72,9 @@ class OgoneBatchGatewayPluginTest extends TestCase
     }
 
     /**
-     * @param boolean $debug    Debug mode
-     * @param string  $method   Method to test
-     * @param string  $expected Expected result
+     * @param bool   $debug    Debug mode
+     * @param string $method   Method to test
+     * @param string $expected Expected result
      *
      * @dataProvider provideTestTestRequestUrls
      */
@@ -90,6 +90,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
 
     /**
      * @group refund
+     *
      * @return FinancialTransaction
      */
     public function testNewTransactionRequiresAnAction()
@@ -105,7 +106,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
             'ALIASID' => 'ALIASID',
             'ARTICLES' => [],
             'TRANSACTIONID' => 4567,
-            'ISREFUND' => false
+            'ISREFUND' => false,
         ];
 
         $transaction = $this->createTransaction('42', 'EUR', $extendedData);
@@ -113,7 +114,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
 
         try {
             $plugin->approveAndDeposit($transaction, true);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof ActionRequiredException);
         }
 
@@ -131,13 +132,13 @@ class OgoneBatchGatewayPluginTest extends TestCase
     public function testApproveRequiresAnActionForNewTransactions()
     {
         $plugin = $this->createPluginMock('');
-        $extendedData = array(
+        $extendedData = [
             'ORDERID' => 1234,
             'PAYID' => 9876,
             'CLIENTID' => 'CLIENT1',
             'ALIASID' => 'ALIASID',
-            'ARTICLES' => array(),
-        );
+            'ARTICLES' => [],
+        ];
 
         $transaction = $this->createTransaction('42', 'EUR', $extendedData);
         $transaction->getExtendedData()->set('lang', 'en_US');
@@ -152,13 +153,13 @@ class OgoneBatchGatewayPluginTest extends TestCase
     public function testDepositRequiresAnActionForNewTransactions()
     {
         $plugin = $this->createPluginMock('');
-        $extendedData = array(
+        $extendedData = [
             'ORDERID' => 1234,
             'PAYID' => 9876,
             'CLIENTID' => 'CLIENT1',
             'ALIASID' => 'ALIASID',
-            'ARTICLES' => array(),
-        );
+            'ARTICLES' => [],
+        ];
 
         $transaction = $this->createTransaction('42', 'EUR', $extendedData);
         $transaction->getExtendedData()->set('lang', 'en_US');
@@ -170,6 +171,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
      * @expectedException        \JMS\Payment\CoreBundle\Plugin\Exception\PaymentPendingException
      * @expectedExceptionMessage Payment/Refund is still approving/refunding, status: 0
      * @depends testNewTransactionRequiresAnAction
+     *
      * @param FinancialTransaction $transaction
      */
     public function testNewRefundingTransaction(FinancialTransaction $transaction)
@@ -182,6 +184,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
      * @expectedException        \JMS\Payment\CoreBundle\Plugin\Exception\PaymentPendingException
      * @expectedExceptionMessage Payment/Refund is still approving/refunding, status: 81
      * @depends testNewTransactionRequiresAnAction
+     *
      * @param FinancialTransaction $transaction
      */
     public function testRefundingTransaction(FinancialTransaction $transaction)
@@ -211,6 +214,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
      * @expectedException        \JMS\Payment\CoreBundle\Plugin\Exception\FinancialException
      * @expectedExceptionMessage Ogone-Response was not successful: A technical problem has occurred. Please try again.
      * @depends testNewTransactionRequiresAnAction
+     *
      * @param FinancialTransaction $transaction
      * @group refund
      */
@@ -354,7 +358,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
     }
 
     /**
-     * Test the processes function
+     * Test the processes function.
      */
     public function testProcesses()
     {
@@ -371,7 +375,7 @@ class OgoneBatchGatewayPluginTest extends TestCase
      *
      * @return \JMS\Payment\CoreBundle\Entity\FinancialTransaction
      */
-    protected function createTransaction($amount, $currency, array $extendedDataValues = array('CN' => 'Foo Bar'))
+    protected function createTransaction($amount, $currency, array $extendedDataValues = ['CN' => 'Foo Bar'])
     {
         $transaction = new FinancialTransaction();
         $transaction->setRequestedAmount($amount);
@@ -390,14 +394,14 @@ class OgoneBatchGatewayPluginTest extends TestCase
     }
 
     /**
-     * @param string  $state
-     * @param boolean $debug
+     * @param string $state
+     * @param bool   $debug
      *
      * @return OgoneBatchGatewayPlugin
      */
     protected function createPluginMock($state = '', $debug = true): OgoneBatchGatewayPlugin
     {
-        $tokenMock  = new Token('', '', '', '', '');
+        $tokenMock = new Token('', '', '', '', '');
         $ogoneFileBuilder = new OgoneFileBuilder($tokenMock);
         $logger = new Logger();
         $pluginMock = new OgoneBatchGatewayPluginMock(

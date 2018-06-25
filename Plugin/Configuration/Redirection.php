@@ -21,7 +21,7 @@ use JMS\Payment\CoreBundle\Model\ExtendedDataInterface;
  */
 
 /**
- * Redirection class
+ * Redirection class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */

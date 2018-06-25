@@ -24,7 +24,8 @@
         "phpunit/phpunit": "6.5",
         "symfony/browser-kit": "~2.0",
         "doctrine/common": "~2.3",
-        "phan/phan": "^0.12.12"
+        "phan/phan": "^0.12.12",
+        "friendsofphp/php-cs-fixer": "^2.12"
     },
     "autoload": {
         "psr-4": { "ETS\\Payment\\OgoneBundle\\": "" }

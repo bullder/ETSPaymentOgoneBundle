@@ -23,14 +23,14 @@ use PHPUnit\Framework\TestCase;
  */
 
 /**
- * Response test class
+ * Response test class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class DirectResponseTest extends TestCase
 {
     /**
-     * Test an invalid response
+     * Test an invalid response.
      */
     public function testInvalidXml()
     {
@@ -48,7 +48,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testApproving()
     {
@@ -68,7 +68,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testApproved()
     {
@@ -85,7 +85,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testDepositing()
     {
@@ -102,7 +102,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testDeposited()
     {
@@ -119,7 +119,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testNotManaged()
     {
@@ -133,7 +133,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testNotApproved()
     {
@@ -150,7 +150,7 @@ class DirectResponseTest extends TestCase
     }
 
     /**
-     * Test a response for an approving payment
+     * Test a response for an approving payment.
      */
     public function testNotDeposited()
     {
@@ -173,7 +173,7 @@ class DirectResponseTest extends TestCase
      */
     protected function createResponse($state)
     {
-        $filename = sprintf(__DIR__ . '/../../Resources/fixtures/%s.xml', $state);
+        $filename = sprintf(__DIR__.'/../../Resources/fixtures/%s.xml', $state);
         $xml = file_get_contents($filename);
 
         return new DirectResponse(new \SimpleXMLElement($xml));

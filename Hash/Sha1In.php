@@ -21,13 +21,13 @@ use ETS\Payment\OgoneBundle\Client\TokenInterface;
  */
 
 /**
- * Sha-1 In tool
+ * Sha-1 In tool.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 class Sha1In implements GeneratorInterface
 {
-    protected static $allowed = array(
+    protected static $allowed = [
         'ACCEPTANCE', 'ACCEPTURL', 'ADDMATCH', 'ADDRMATCH', 'AIACTIONNUMBER',
         'AIAGIATA', 'AIAIRNAME', 'AIAIRTAX', 'AICHDET', 'AICONJTI',
         'AIDEPTCODE', 'AIEYCD', 'AIGLNUM', 'AIINVOICE', 'AIIRST', 'AIPASNAME',
@@ -89,10 +89,10 @@ class Sha1In implements GeneratorInterface
         'UCAF_PAYMENT_CARD_CVC2', 'UCAF_PAYMENT_CARD_EXPDATE_MONTH',
         'UCAF_PAYMENT_CARD_EXPDATE_YEAR', 'UCAF_PAYMENT_CARD_NUMBER', 'USERID',
         'USERTYPE', 'VERSION', 'WBTU_MSISDN', 'WBTU_ORDERID', 'WEIGHTUNIT',
-        'WIN3DS', 'WITHROOT'
-    );
+        'WIN3DS', 'WITHROOT',
+    ];
 
-    protected static $allowedWildcard = array(
+    protected static $allowedWildcard = [
         'AIBOOKIND', 'AICARRIER', 'AICLASS', 'AIDESTCITY',
         'AIDESTCITYL', 'AIEXTRAPASNAME', 'AIFLDATE',
         'AIFLNUM', 'AIORCITY',
@@ -103,7 +103,7 @@ class Sha1In implements GeneratorInterface
         'ITEMPRICE', 'ITEMQUANT', 'ITEMQUANTORIG',
         'ITEMUNITOFMEASURE', 'ITEMVAT', 'ITEMVATCODE',
         'ITEMWEIGHT', 'LIDEXCL', 'MAXITEMQUANT', 'TAXINCLUDED',
-    );
+    ];
 
     /**
      * @var TokenInterface
@@ -125,13 +125,12 @@ class Sha1In implements GeneratorInterface
      */
     public function generate(array $parameters)
     {
-        $shainString ='';
+        $shainString = '';
 
         // All parameters need to be arranged alphabetically.
         ksort($parameters);
 
         foreach ($parameters as $key => $value) {
-
             // Parameters that do not have a value should NOT be included in the string to hash
             if (empty($value)) {
                 continue;
@@ -151,12 +150,12 @@ class Sha1In implements GeneratorInterface
     /**
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     protected function isWildcarded($key)
     {
         foreach (static::$allowedWildcard as $allowed) {
-            if (strpos($key, $allowed) !== false) {
+            if (false !== strpos($key, $allowed)) {
                 return true;
             }
         }

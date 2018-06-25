@@ -2,12 +2,11 @@
 
 namespace ETS\Payment\OgoneBundle\Service;
 
-
 use ETS\Payment\OgoneBundle\Client\TokenInterface;
 use ETS\Payment\OgoneBundle\Plugin\OgoneBatchGatewayPlugin;
 
 /**
- * To build the batch file that will be sent to Ogone
+ * To build the batch file that will be sent to Ogone.
  */
 class OgoneFileBuilder
 {
@@ -20,7 +19,7 @@ class OgoneFileBuilder
     private $token;
 
     /**
-     *  @param TokenInterface $token
+     *  @param TokenInterface $token
      */
     public function __construct(TokenInterface $token)
     {
@@ -48,23 +47,23 @@ class OgoneFileBuilder
         $globalInformationLine = $this->createGlobalInformationLineArray();
         $globalOperationLine = $this->createGlobalOperationLineArray($orderId, $transaction, $operation);
 
-        $amountTaxExcluded  = 0.0;
+        $amountTaxExcluded = 0.0;
         $amountValueAddedTax = 0.0;
         $nbArticles = 0.0;
-        $articlesLines = array();
+        $articlesLines = [];
 
-        foreach($articles as $k => $article) {
+        foreach ($articles as $k => $article) {
             $this->validateArticle($article);
-            $id        = $article['id'];
-            $quantity  = $article['quantity'];
+            $id = $article['id'];
+            $quantity = $article['quantity'];
             $unitPrice = round($article['price'], 2) * 100;
-            $name      = substr($article['name'], 0, 39);
-            $vat       = $article['vat'];
-            $price     = $quantity * $unitPrice;
+            $name = substr($article['name'], 0, 39);
+            $vat = $article['vat'];
+            $price = $quantity * $unitPrice;
             $articlesLines[$k] = $this->createDetailLineArray($quantity, $id, $name, $unitPrice, $vat, $price);
             $amountTaxExcluded += $price; //tax excluded
             $amountValueAddedTax += round($price * $vat);
-            $nbArticles++;
+            ++$nbArticles;
         }
 
         $amountTaxIncluded = $amountTaxExcluded + $amountValueAddedTax; //amount taxes included
@@ -88,7 +87,7 @@ class OgoneFileBuilder
 
         $globalClientFileLine = $this->createGlobalClientFileArray($legalCommitment);
 
-        $lines = array();
+        $lines = [];
 
         $lines[] = $globalInformationLine;
         $lines[] = $globalOperationLine;
@@ -106,13 +105,13 @@ class OgoneFileBuilder
      * @param string $orderId
      * @param string $payId
      * @param string $operation
-     * @param float $nbArticles
+     * @param float  $nbArticles
      * @param string $aliasId
      * @param string $clientId
      * @param string $clientRef
-     * @param float $amountTaxExcluded
-     * @param float $amountVat
-     * @param float $amountTaxIncluded
+     * @param float  $amountTaxExcluded
+     * @param float  $amountVat
+     * @param float  $amountTaxIncluded
      * @param string $transactionId
      * @param string $legalCommitment
      *
@@ -154,7 +153,6 @@ class OgoneFileBuilder
         return $globalInformationLine;
     }
 
-
     /**
      * @param string $legalCommitment
      *
@@ -192,9 +190,9 @@ class OgoneFileBuilder
      * @param string $quantity
      * @param string $id
      * @param string $name
-     * @param float $unitPrice
+     * @param float  $unitPrice
      * @param string $vat
-     * @param float $price
+     * @param float  $price
      *
      * @return array
      */
@@ -241,7 +239,7 @@ class OgoneFileBuilder
      */
     private function validateArticle(array $article)
     {
-        $keys = array('id', 'quantity', 'price', 'name', 'vat');
+        $keys = ['id', 'quantity', 'price', 'name', 'vat'];
         foreach ($keys as $key) {
             if (!isset($article[$key])) {
                 throw new \InvalidArgumentException("Parameter $key is missing");
@@ -256,8 +254,8 @@ class OgoneFileBuilder
      */
     private function initArray(int $size): array
     {
-        $array = array();
-        for ($i = 0; $i < $size; $i++) {
+        $array = [];
+        for ($i = 0; $i < $size; ++$i) {
             $array[$i] = '';
         }
 
@@ -274,10 +272,10 @@ class OgoneFileBuilder
         $file = '';
 
         foreach ($lines as $line) {
-            foreach($line as $value) {
-                $file.=$value.';';
+            foreach ($line as $value) {
+                $file .= $value.';';
             }
-            $file.="\n";
+            $file .= "\n";
         }
 
         return $file;

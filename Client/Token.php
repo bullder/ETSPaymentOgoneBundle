@@ -2,7 +2,7 @@
 
 namespace ETS\Payment\OgoneBundle\Client;
 
-    /*
+/*
      * Copyright 2013 ETSGlobal <ecs@etsglobal.org>
      *
      * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ namespace ETS\Payment\OgoneBundle\Client;
      */
 
 /**
- * Token
+ * Token.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -40,11 +40,11 @@ class Token implements TokenInterface
      */
     public function __construct($pspid, $apiUser, $apiPassword, $shain, $shaout)
     {
-        $this->pspid       = $pspid;
-        $this->apiUser     = $apiUser;
+        $this->pspid = $pspid;
+        $this->apiUser = $apiUser;
         $this->apiPassword = $apiPassword;
-        $this->shain       = $shain;
-        $this->shaout      = $shaout;
+        $this->shain = $shain;
+        $this->shaout = $shaout;
     }
 
     /**

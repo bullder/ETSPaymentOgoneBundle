@@ -29,7 +29,7 @@ class RequestStubber extends TestCase
     }
 
     /**
-     * @param  boolean $withShasign
+     * @param bool $withShasign
      *
      * @return array
      */

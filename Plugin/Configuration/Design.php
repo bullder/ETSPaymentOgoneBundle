@@ -21,7 +21,7 @@ use JMS\Payment\CoreBundle\Model\ExtendedDataInterface;
  */
 
 /**
- * Design class
+ * Design class.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -52,16 +52,16 @@ class Design
      */
     public function __construct($tp = null, $title = null, $bgColor = null, $txtColor = null, $tblBgColor = null, $tblTxtColor = null, $buttonBgColor = null, $buttonTxtColor = null, $fontType = null, $logo = null)
     {
-        $this->tp             = $tp;
-        $this->title          = $title;
-        $this->bgColor        = $bgColor;
-        $this->txtColor       = $txtColor;
-        $this->tblBgColor     = $tblBgColor;
-        $this->tblTxtColor    = $tblTxtColor;
-        $this->buttonBgColor  = $buttonBgColor;
+        $this->tp = $tp;
+        $this->title = $title;
+        $this->bgColor = $bgColor;
+        $this->txtColor = $txtColor;
+        $this->tblBgColor = $tblBgColor;
+        $this->tblTxtColor = $tblTxtColor;
+        $this->buttonBgColor = $buttonBgColor;
         $this->buttonTxtColor = $buttonTxtColor;
-        $this->fontType       = $fontType;
-        $this->logo           = $logo;
+        $this->fontType = $fontType;
+        $this->logo = $logo;
     }
 
     /**
@@ -172,16 +172,16 @@ class Design
     public function getRequestParameters(ExtendedDataInterface $data): array
     {
         return [
-            'TP'             => $this->getTp($data),
-            'TITLE'          => $this->getTitle($data),
-            'BGCOLOR'        => $this->getBgColor($data),
-            'TXTCOLOR'       => $this->getTxtColor($data),
-            'TBLBGCOLOR'     => $this->getTblBgColor($data),
-            'TBLTXTCOLOR'    => $this->getTblTxtColor($data),
-            'BUTTONBGCOLOR'  => $this->getButtonBgColor($data),
+            'TP' => $this->getTp($data),
+            'TITLE' => $this->getTitle($data),
+            'BGCOLOR' => $this->getBgColor($data),
+            'TXTCOLOR' => $this->getTxtColor($data),
+            'TBLBGCOLOR' => $this->getTblBgColor($data),
+            'TBLTXTCOLOR' => $this->getTblTxtColor($data),
+            'BUTTONBGCOLOR' => $this->getButtonBgColor($data),
             'BUTTONTXTCOLOR' => $this->getButtonTxtColor($data),
-            'FONTTYPE'       => $this->getFontType($data),
-            'LOGO'           => $this->getLogo($data),
+            'FONTTYPE' => $this->getFontType($data),
+            'LOGO' => $this->getLogo($data),
         ];
     }
 }

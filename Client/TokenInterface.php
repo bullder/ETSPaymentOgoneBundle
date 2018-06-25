@@ -19,44 +19,44 @@ namespace ETS\Payment\OgoneBundle\Client;
  */
 
 /**
- * Token interface
+ * Token interface.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
 interface TokenInterface
 {
     /**
-     * Return PSPID
+     * Return PSPID.
      *
      * @return string
      */
-    function getPspid();
+    public function getPspid();
 
     /**
-     * Return the API user password
+     * Return the API user password.
      *
      * @return string
      */
-    function getApiPassword();
+    public function getApiPassword();
 
     /**
-     * Return the API user id
+     * Return the API user id.
      *
      * @return string
      */
-    function getApiUser();
+    public function getApiUser();
 
     /**
-     * Return the sha in
+     * Return the sha in.
      *
      * @return string
      */
-    function getShain();
+    public function getShain();
 
     /**
-     * Return the sha out
+     * Return the sha out.
      *
      * @return string
      */
-    function getShaout();
+    public function getShaout();
 }

@@ -3,7 +3,7 @@
 namespace ETS\Payment\OgoneBundle\Hash;
 
 /**
- * Copyright 2014 ETSGlobal <ecs@etsglobal.org>
+ * Copyright 2014 ETSGlobal <ecs@etsglobal.org>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ namespace ETS\Payment\OgoneBundle\Hash;
  */
 
 /**
- * Hash generator interface
+ * Hash generator interface.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */

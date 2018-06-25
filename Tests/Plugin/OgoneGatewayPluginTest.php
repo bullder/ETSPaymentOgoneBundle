@@ -20,7 +20,7 @@ use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Copyright 2013 ETSGlobal <ecs@etsglobal.org>
+ * Copyright 2013 ETSGlobal <ecs@etsglobal.org>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ use PHPUnit\Framework\TestCase;
  */
 
 /**
- * OgoneGatewayPlugin tests
+ * OgoneGatewayPlugin tests.
  */
 class OgoneGatewayPluginTest extends TestCase
 {
@@ -56,7 +56,7 @@ class OgoneGatewayPluginTest extends TestCase
                 ['STATUS', null, false, 5],
                 ['CARDNO', null, false, 4567123478941234],
                 ['PAYID', null, false, 43],
-                ['SHASign', null, false, 'fzgzgzghz4648zh6z5h']
+                ['SHASign', null, false, 'fzgzgzghz4648zh6z5h'],
             ]
         );
     }
@@ -77,10 +77,10 @@ class OgoneGatewayPluginTest extends TestCase
     }
 
     /**
-     * @param boolean $debug    Debug mode
-     * @param boolean $utf8     UTF8 mode
-     * @param string  $method   Method to test
-     * @param string  $expected Expected result
+     * @param bool   $debug    Debug mode
+     * @param bool   $utf8     UTF8 mode
+     * @param string $method   Method to test
+     * @param string $expected Expected result
      *
      * @dataProvider provideTestTestRequestUrls
      *
@@ -297,7 +297,7 @@ class OgoneGatewayPluginTest extends TestCase
     }
 
     /**
-     * Test the Check payment instruction with valid datas
+     * Test the Check payment instruction with valid datas.
      */
     public function testValidCheckPaymentInstruction()
     {
@@ -316,7 +316,7 @@ class OgoneGatewayPluginTest extends TestCase
     }
 
     /**
-     * Test the processes function
+     * Test the processes function.
      */
     public function testProcesses()
     {
@@ -340,7 +340,7 @@ class OgoneGatewayPluginTest extends TestCase
         $getResponseMethod = $class->getMethod('getResponse');
         $getResponseMethod->setAccessible(true);
 
-        $response = $getResponseMethod->invokeArgs($plugin, array($transaction));
+        $response = $getResponseMethod->invokeArgs($plugin, [$transaction]);
 
         $this->assertInstanceOf(FeedbackResponse::class, $response);
     }
@@ -371,15 +371,15 @@ class OgoneGatewayPluginTest extends TestCase
     }
 
     /**
-     * @param string  $state
-     * @param boolean $debug
-     * @param boolean $utf8
+     * @param string $state
+     * @param bool   $debug
+     * @param bool   $utf8
      *
      * @return OgoneGatewayPlugin
      */
     protected function createPluginMock($state = '', $debug = true, $utf8 = false): OgoneGatewayPlugin
     {
-        $tokenMock  = new Token('', '', '', '', '');
+        $tokenMock = new Token('', '', '', '', '');
         $pluginMock = new OgoneGatewayPluginMock(
             $tokenMock,
             new Sha1In($tokenMock),
@@ -421,7 +421,7 @@ class OgoneGatewayPluginTest extends TestCase
      */
     public function testNormalize(array $additionalData, array $exected)
     {
-       $this->assertSame($exected, OgoneGatewayPlugin::normalize($additionalData));
+        $this->assertSame($exected, OgoneGatewayPlugin::normalize($additionalData));
     }
 
     /**

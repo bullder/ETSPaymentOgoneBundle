@@ -12,14 +12,13 @@ use JMS\Payment\CoreBundle\Plugin\Exception\CommunicationException;
 use JMS\Payment\CoreBundle\Plugin\Exception\FinancialException;
 use JMS\Payment\CoreBundle\Plugin\Exception\PaymentPendingException;
 use JMS\Payment\CoreBundle\Plugin\PluginInterface;
-
 use ETS\Payment\OgoneBundle\Client\TokenInterface;
 use ETS\Payment\OgoneBundle\Hash\GeneratorInterface;
 use ETS\Payment\OgoneBundle\Response\DirectResponse;
 use ETS\Payment\OgoneBundle\Response\ResponseInterface;
 
 /**
- * Copyright 2013 ETSGlobal <ecs@etsglobal.org>
+ * Copyright 2013 ETSGlobal <ecs@etsglobal.org>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +34,7 @@ use ETS\Payment\OgoneBundle\Response\ResponseInterface;
  */
 
 /**
- * Ogone gateway plugin
+ * Ogone gateway plugin.
  *
  * @author ETSGlobal <ecs@etsglobal.org>
  */
@@ -62,7 +61,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     protected $designConfig;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $utf8;
 
@@ -74,7 +73,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     /**
      * @var array
      */
-    public static $additionalData = array(
+    public static $additionalData = [
         'PM' => 25,
         'BRAND' => 25,
         'CN' => 35,
@@ -85,25 +84,25 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
         'OWNERTOWN' => 40,
         'OWNERTELNO' => 20,
         'OWNERTELNO2' => 20,
-    );
+    ];
 
     /**
      * @param TokenInterface            $token
      * @param GeneratorInterface        $hashGenerator
      * @param Configuration\Redirection $redirectionConfig
      * @param Configuration\Design      $designConfig
-     * @param boolean                   $debug
-     * @param boolean                   $utf8
+     * @param bool                      $debug
+     * @param bool                      $utf8
      */
     public function __construct(TokenInterface $token, GeneratorInterface $hashGenerator, Configuration\Redirection $redirectionConfig, Configuration\Design $designConfig, $debug, $utf8)
     {
         parent::__construct($debug, $utf8);
 
-        $this->token             = $token;
-        $this->hashGenerator     = $hashGenerator;
+        $this->token = $token;
+        $this->hashGenerator = $hashGenerator;
         $this->redirectionConfig = $redirectionConfig;
-        $this->designConfig      = $designConfig;
-        $this->utf8              = $utf8;
+        $this->designConfig = $designConfig;
+        $this->utf8 = $utf8;
     }
 
     /**
@@ -124,7 +123,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      * another transaction.
      *
      * @param FinancialTransactionInterface $transaction The transaction
-     * @param boolean                       $retry       Whether this is a retry transaction
+     * @param bool                          $retry       Whether this is a retry transaction
      */
     public function approveAndDeposit(FinancialTransactionInterface $transaction, $retry)
     {
@@ -143,7 +142,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      * authorized.
      *
      * @param FinancialTransactionInterface $transaction The transaction
-     * @param boolean                       $retry       Whether this is a retry transaction
+     * @param bool                          $retry       Whether this is a retry transaction
      *
      * @throws ActionRequiredException If the transaction's state is NEW
      * @throws FinancialException      If payment is not approved
@@ -151,7 +150,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      */
     public function approve(FinancialTransactionInterface $transaction, $retry)
     {
-        if ($transaction->getState() === FinancialTransactionInterface::STATE_NEW) {
+        if (FinancialTransactionInterface::STATE_NEW === $transaction->getState()) {
             throw $this->createRedirectActionException($transaction);
         }
 
@@ -184,9 +183,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      * A typical use case are Credit Card payments.
      *
      * @param FinancialTransactionInterface $transaction The transaction
-     * @param boolean                       $retry       Retry
-     *
-     * @return void
+     * @param bool                          $retry       Retry
      *
      * @throws ActionRequiredException If the transaction's state is NEW
      * @throws FinancialException      If payment is not approved
@@ -194,7 +191,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      */
     public function deposit(FinancialTransactionInterface $transaction, $retry): void
     {
-        if ($transaction->getState() === FinancialTransactionInterface::STATE_NEW) {
+        if (FinancialTransactionInterface::STATE_NEW === $transaction->getState()) {
             throw $this->createRedirectActionException($transaction);
         }
 
@@ -253,9 +250,9 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      * the PaymentInstruction which will always be accessible either directly, or
      * indirectly.
      *
-     * @param  string  $paymentSystemName
+     * @param string $paymentSystemName
      *
-     * @return boolean
+     * @return bool
      */
     public function processes($paymentSystemName)
     {
@@ -263,9 +260,9 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     }
 
     /**
-     * approve Authorized & Sale transactions
+     * approve Authorized & Sale transactions.
      *
-     * @param  FinancialTransactionInterface $transaction
+     * @param FinancialTransactionInterface $transaction
      *
      * @return ActionRequiredException
      *
@@ -304,7 +301,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
                 'PSPID' => $this->token->getPspid(),
                 'AMOUNT' => $transaction->getRequestedAmount() * 100,
                 'CURRENCY' => $transaction->getPayment()->getPaymentInstruction()->getCurrency(),
-                'LANGUAGE' => $extendedData->get('lang')
+                'LANGUAGE' => $extendedData->get('lang'),
             ]
         );
 
@@ -312,7 +309,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
 
         ksort($parameters, SORT_STRING);
 
-        $actionRequestException->setAction(new VisitUrl($this->getStandardOrderUrl() . '?' . http_build_query($parameters)));
+        $actionRequestException->setAction(new VisitUrl($this->getStandardOrderUrl().'?'.http_build_query($parameters)));
 
         return $actionRequestException;
     }
@@ -321,8 +318,8 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      * Get a Response object from the transaction's extended data if feedback has been provided through a callback,
      * or from a call to ogone's api.
      *
-     * @param  FinancialTransactionInterface $transaction
-     * @param  boolean                       $forceDirect
+     * @param FinancialTransactionInterface $transaction
+     * @param bool                          $forceDirect
      *
      * @return \ETS\Payment\OgoneBundle\Response\ResponseInterface
      *
@@ -350,7 +347,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     }
 
     /**
-     * Perform direct online payment operations
+     * Perform direct online payment operations.
      *
      * @param FinancialTransactionInterface $transaction
      *
@@ -360,12 +357,12 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
      */
     protected function getDirectResponse(FinancialTransactionInterface $transaction): DirectResponse
     {
-        $apiData = array(
-            'PSPID'   => $this->token->getPspid(),
-            'USERID'  => $this->token->getApiUser(),
-            'PSWD'    => $this->token->getApiPassword(),
+        $apiData = [
+            'PSPID' => $this->token->getPspid(),
+            'USERID' => $this->token->getApiUser(),
+            'PSWD' => $this->token->getApiPassword(),
             'ORDERID' => $transaction->getExtendedData()->get('ORDERID'),
-        );
+        ];
 
         if ($transaction->getExtendedData()->has('PAYID')) {
             $apiData['PAYID'] = $transaction->getExtendedData()->get('PAYID');
@@ -375,7 +372,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     }
 
     /**
-     * Send requests to Ogone API
+     * Send requests to Ogone API.
      *
      * @param array $parameters
      *
@@ -425,7 +422,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     /**
      * @param string $key
      *
-     * @return integer
+     * @return int
      *
      * @throws \InvalidArgumentException
      */
@@ -443,7 +440,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
     }
 
     /**
-     * Return direct response content
+     * Return direct response content.
      *
      * @param FinancialTransactionInterface $transaction
      *
@@ -457,8 +454,7 @@ class OgoneGatewayPlugin extends OgoneGatewayBasePlugin
         $response = $this->getDirectResponse($transaction);
 
         if (!$response->isSuccessful()) {
-
-            $ex = new FinancialException('Direct Ogone-Response was not successful: ' . $response->getErrorDescription());
+            $ex = new FinancialException('Direct Ogone-Response was not successful: '.$response->getErrorDescription());
             $ex->setFinancialTransaction($transaction);
 
             throw $ex;
